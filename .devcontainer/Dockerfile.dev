@@ -40,9 +40,9 @@ ENV UV_LINK_MODE=copy
 RUN pip install --upgrade pip uv
 
 # Install dependencies
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-  && apt-get update \
-  && apt-get install -y nodejs
+# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+#   && apt-get update \
+#   && apt-get install -y nodejs
 
 # Cleanup
 RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
