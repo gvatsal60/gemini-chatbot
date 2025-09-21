@@ -1,4 +1,7 @@
 {
+  "build": {
+    "dockerfile": "Dockerfile.dev"
+  },
   "capAdd": [
     "SYS_PTRACE"
   ],
@@ -6,14 +9,19 @@
     "vscode": {
       "extensions": [
         "DavidAnson.vscode-markdownlint",
-        "EditorConfig.EditorConfig",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "SonarSource.sonarlint-vscode",
         "Tyriar.sort-lines",
         "bradzacher.vscode-copy-filename",
-        "esbenp.prettier-vscode",
-        "foxundermoon.shell-format",
-        "ms-azuretools.vscode-docker",
+        "charliermarsh.ruff",
+        "docker.docker",
+        "ms-azuretools.vscode-containers",
+        "ms-python.isort",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
         "streetsidesoftware.code-spell-checker",
-        "timonwong.shellcheck",
         "usernamehw.errorlens"
       ],
       "settings": {
@@ -28,7 +36,10 @@
         "explorer.confirmDelete": false,
         "extensions.ignoreRecommendations": true,
         "files.associations": {
-          "*.code-snippets": "jsonc"
+          ".env*": "dotenv"
+        },
+        "github.copilot.enable": {
+          "dotenv": false
         },
         "files.autoSave": "afterDelay",
         "files.eol": "auto",
@@ -47,10 +58,6 @@
       }
     }
   },
-  "image": "mcr.microsoft.com/devcontainers/base:debian",
-  "mounts": [
-    "source=${localWorkspaceFolder}/snippets,target=${containerWorkspaceFolder}/.vscode,type=bind,consistency=cached"
-  ],
   "postCreateCommand": "chmod +x ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh && ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh",
   "runArgs": [
     "--rm",
