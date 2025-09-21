@@ -8,7 +8,7 @@
 # ##########################################################################
 # License
 # ##########################################################################
-# This Dockerfile is licensed under the MIT License.
+# This Dockerfile is licensed under the Apache 2.0 License.
 # License information should be updated as necessary.
 # ##########################################################################
 
@@ -30,8 +30,6 @@ WORKDIR /app
 # ##########################################################################
 # Copy Files
 # ##########################################################################
-
-COPY ./.streamlit ./.streamlit
 COPY ./src/ .
 COPY pyproject.toml .
 

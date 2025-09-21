@@ -1,12 +1,34 @@
-# Makefile for managing project tasks
+#***************************************************************************************
+# * File: Makefile
+# * Author: Vatsal Gupta
+# * Date: 21-Sep-2025
+# * Description: Brief description of the Makefile's purpose.
+# **************************************************************************************/
 
+#***************************************************************************************
+# * License
+# **************************************************************************************/
+# This file is licensed under the Apache 2.0 License.
+# License information should be updated as necessary.
+
+#***************************************************************************************
+# * Variables
+# **************************************************************************************/
 SRC_DIR := src
 
-all:
-	uv sync
-run:
-	@uv run --directory $(SRC_DIR) streamlit run app.py --browser.gatherUsageStats false
-clean:
-	uv clean
+#***************************************************************************************
+# * Targets
+# **************************************************************************************/
+.PHONY: all run test clean
 
-.PHONY: all clean
+all: sync run
+
+sync:
+	@uv sync
+run: sync
+	@uv run --directory $(SRC_DIR) streamlit run app.py --browser.gatherUsageStats false
+test: sync
+	@echo "No tests available currently."
+# 	@uv test
+clean:
+	@uv clean

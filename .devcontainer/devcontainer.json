@@ -63,9 +63,6 @@
       }
     }
   },
-  "features": {
-    "ghcr.io/gvatsal60/dev-container-features/uv": "latest"
-  },
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "postCreateCommand": "chmod +x ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh && ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh",
   "runArgs": [
