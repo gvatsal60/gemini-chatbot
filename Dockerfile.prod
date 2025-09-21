@@ -1,0 +1,10 @@
+FROM ghcr.io/astral-sh/uv:python3.12-alpine
+
+WORKDIR /app
+COPY pyproject.toml .
+RUN uv --no-cache sync
+
+COPY ./.streamlit ./.streamlit
+COPY ./src/ .
+
+CMD ["uv", "run", "streamlit", "run", "app.py"]

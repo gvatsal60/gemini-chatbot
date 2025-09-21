@@ -1,14 +1,10 @@
 [project]
-name = "genai"
+name = "gemini-chatbot"
 version = "0.1.0"
-description = "Add your description here"
+description = "A chatbot application using Google's Gemini API and Streamlit."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
-    "langchain>=0.3.27",
-    "langchain-google-genai>=2.1.10",
-    "langchain-mcp-adapters>=0.1.9",
-    "langgraph>=0.6.6",
-    "langgraph-prebuilt>=0.6.4",
-    "mcp>=1.13.1",
+    "google-generativeai>=0.8.5",
+    "streamlit>=1.49.1",
 ]
