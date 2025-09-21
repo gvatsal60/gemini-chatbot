@@ -1,51 +1,41 @@
 # ##########################################################################
-# File: Dockerfile.dev
-# Author: Vatsal Gupta(gvatsal60)
+# File: Dockerfile
+# Author: Vatsal Gupta (gvatsal60)
 # Date: 21-Sep-2025
-# Description: Dockerfile for setting up a development environment
-#              with Python 3.12, uv and necessary tools.
+# Description: Dockerfile for a Streamlit application using UV base image.
 # ##########################################################################
 
 # ##########################################################################
 # License
 # ##########################################################################
-# This Dockerfile is licensed under the Apache 2.0 License.
+# This Dockerfile is licensed under the MIT License.
 # License information should be updated as necessary.
 # ##########################################################################
 
 # ##########################################################################
 # Base Image
 # ##########################################################################
-FROM mcr.microsoft.com/devcontainers/python:3.12 AS base
+FROM ghcr.io/astral-sh/uv:python3.12-alpine
 
 # ##########################################################################
 # Maintainer
 # ##########################################################################
-LABEL maintainer="Vatsal Gupta(gvatsal60)"
+LABEL maintainer="Vatsal Gupta (gvatsal60)"
 
 # ##########################################################################
-# Environment Variables
+# Set Working Directory
 # ##########################################################################
-# Avoid warnings by switching to noninteractive
-ENV DEBIAN_FRONTEND=noninteractive
-# Disabled Telemetry
-ENV ANONYMIZED_TELEMETRY=False
-# Set the `uv` link mode to copy
-ENV UV_LINK_MODE=copy
+WORKDIR /app
 
 # ##########################################################################
-# Install Dependencies
+# Copy Files
 # ##########################################################################
-# Update `pip`
-RUN pip install --upgrade pip uv
 
-# Install dependencies
-# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-#   && apt-get update \
-#   && apt-get install -y nodejs
+COPY ./.streamlit ./.streamlit
+COPY ./src/ .
+COPY pyproject.toml .
 
-# Cleanup
-RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+RUN uv --no-cache sync
 
 # ##########################################################################
 # Expose Port
@@ -55,3 +45,5 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
+CMD ["uv", "run", "streamlit", "run", "app.py"]
+

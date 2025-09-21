@@ -1,6 +1,11 @@
 {
-  "build": {
-    "dockerfile": "Dockerfile.dev"
+  "containerEnv": {
+    "ANONYMIZED_TELEMETRY": "false",
+    "DEBIAN_FRONTEND": "noninteractive",
+    "PIP_NO_CACHE_DIR": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "STREAMLIT_BROWSER_GATHERUSAGESTATS": "false",
+    "UV_LINK_MODE": "copy"
   },
   "capAdd": [
     "SYS_PTRACE"
@@ -57,6 +62,10 @@
         "workbench.startupEditor": "none"
       }
     }
+  },
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/gvatsal60/dev-container-features/uv": "latest"
   },
   "postCreateCommand": "chmod +x ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh && ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh",
   "runArgs": [
