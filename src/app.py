@@ -9,22 +9,22 @@ import streamlit as st
 
 def initialize_session():
     """ Initialize session state variables. """
-    if "messages" not in st.session_state:
-        st.session_state["messages"] = [{
-            "role": "assistant",
-            "content": "How can I help you?"
+    if 'messages' not in st.session_state:
+        st.session_state['messages'] = [{
+            'role': 'assistant',
+            'content': 'How can I help you?'
         }]
-    if "ready" not in st.session_state:
-        st.session_state["ready"] = False
+    if 'ready' not in st.session_state:
+        st.session_state['ready'] = False
 
 
 def validate_inputs(_api_key: str, _model_name: str) -> bool:
     """ Validate if API key and model name are provided. """
     if not _api_key:
-        st.info("Please add your Google API Key to continue...")
+        st.info('Please add your Google API Key to continue...')
         return False
     if not _model_name:
-        st.info("Please select a model to continue...")
+        st.info('Please select a model to continue...')
         return False
     return True
 
@@ -55,49 +55,49 @@ def generate_response(_model: genai.GenerativeModel, _prompt: str) -> str | None
 
 with st.sidebar:
     api_key = st.text_input(
-        label="Google API Key",
-        key="_api_key",
-        type="password",
-        help="Get your API key from https://aistudio.google.com/apikey",
-        placeholder="Enter your Google API Key",
+        label='Google API Key',
+        key='_api_key',
+        type='password',
+        help='Get your API key from https://aistudio.google.com/apikey',
+        placeholder='Enter your Google API Key',
     )
     model_name = st.selectbox(
-        label="Select Model",
+        label='Select Model',
         options=[
-            "gemini-2.5-pro",
-            "gemini-2.5-flash",
-            "gemini-2.5-flash-lite",
-            "gemini-2.0-flash",
-            "gemini-2.0-flash-lite",
+            'gemini-2.5-pro',
+            'gemini-2.5-flash',
+            'gemini-2.5-flash-lite',
+            'gemini-2.0-flash',
+            'gemini-2.0-flash-lite',
         ],
         index=None,
-        help="Choose a Gemini model"
+        help='Choose a Gemini model'
     )
 
-st.title("💬 Q&A Chatbot")
+st.title('💬 Q&A Chatbot')
 
 initialize_session()
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message(msg['role']).write(msg['content'])
 
 # Only enable chat input if API key and model are set
 INPUT_DISABLED = not validate_inputs(api_key, model_name)
 prompt = st.chat_input(disabled=INPUT_DISABLED)
 
 if prompt and not INPUT_DISABLED:
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    st.chat_message('user').write(prompt)
 
     model = get_model(api_key, model_name)
     if model:
         response = generate_response(model, prompt)
         if response:
             st.session_state.messages.append(
-                {"role": "assistant", "content": response})
-            st.chat_message("assistant").write(response)
+                {'role': 'assistant', 'content': response})
+            st.chat_message('assistant').write(response)
         else:
             st.session_state.messages.append(
-                {"role": "assistant", "content": "Sorry, I couldn't process your request."})
-            st.chat_message("assistant").write(
+                {'role': 'assistant', 'content': "Sorry, I couldn't process your request."})
+            st.chat_message('assistant').write(
                 "Sorry, I couldn't process your request.")
