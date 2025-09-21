@@ -17,3 +17,6 @@ uv.lock
 
 # Codacy configuration
 .codacy/
+
+# Vs Code settings
+.vscode/
