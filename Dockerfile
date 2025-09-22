@@ -15,7 +15,8 @@
 # ##########################################################################
 # Base Image
 # ##########################################################################
-FROM ghcr.io/astral-sh/uv:python3.12-alpine
+# Stage 1: Builder - Install dependencies
+FROM python:3.12-slim AS builder
 
 # ##########################################################################
 # Maintainer
@@ -30,10 +31,24 @@ WORKDIR /app
 # ##########################################################################
 # Copy Files
 # ##########################################################################
-COPY ./src/ .
-COPY pyproject.toml .
+# Copy requirements and install them
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
 
-RUN uv --no-cache sync
+# Copy application code
+COPY src/ .
+
+# Stage 2: Runtime - Create the distroless image
+FROM gcr.io/distroless/python3.12:nonroot
+
+WORKDIR /app
+
+# Copy installed packages and application code from the builder stage
+COPY --from=builder /root/.local /usr/.local
+COPY --from=builder /app .
+
+# Add the user's local bin directory to the PATH
+ENV PATH=/usr/.local/bin:$PATH
 
 # ##########################################################################
 # Expose Port
@@ -43,4 +58,4 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
-CMD ["uv", "run", "streamlit", "run", "app.py"]
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
