@@ -44,11 +44,11 @@ FROM gcr.io/distroless/python3.12:nonroot
 WORKDIR /app
 
 # Copy installed packages and application code from the builder stage
-COPY --from=builder /root/.local /root/.local
+COPY --from=builder /root/.local /usr/.local
 COPY --from=builder /app .
 
 # Add the user's local bin directory to the PATH
-ENV PATH=/root/.local/bin:$PATH
+ENV PATH=/usr/.local/bin:$PATH
 
 # ##########################################################################
 # Expose Port
