@@ -20,4 +20,4 @@ jobs:
           HF_SPACE: ${{ github.repository }}
           HF_BRANCH: main
         run: |
-          git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_SPACE $HF_BRANCH
+          git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_SPACE master:$HF_BRANCH
