@@ -1,3 +1,18 @@
+---
+title: Gemini Chatbot
+emoji: 🚀
+colorFrom: red
+colorTo: red
+sdk: docker
+app_port: 8501
+tags:
+- streamlit
+pinned: false
+short_description: A conversational chatbot powered by Google's Gemini models
+license: apache-2.0
+---
+
+<!-- markdownlint-disable MD025 -->
 # Gemini Chatbot
 
 Gemini Chatbot is an AI-powered conversational assistant designed to help users interact with various models through natural language. Built with Python, it leverages modern AI models to provide intelligent, context-aware responses.

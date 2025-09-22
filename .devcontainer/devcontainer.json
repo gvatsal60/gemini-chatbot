@@ -16,7 +16,6 @@
         "DavidAnson.vscode-markdownlint",
         "GitHub.copilot",
         "GitHub.copilot-chat",
-        "SonarSource.sonarlint-vscode",
         "Tyriar.sort-lines",
         "bradzacher.vscode-copy-filename",
         "charliermarsh.ruff",
@@ -63,7 +62,7 @@
       }
     }
   },
-  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12:latest",
   "postCreateCommand": "chmod +x ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh && ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh",
   "runArgs": [
     "--rm",
