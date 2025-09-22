@@ -8,8 +8,8 @@ tags:
 - python
 - google
 pinned: false
-short_description: A conversational chatbot powered by Google's Gemini models.
-license: Apache-2.0
+short_description: A conversational chatbot powered by Google's Gemini models
+license: apache-2.0
 ---
 
 <!-- markdownlint-disable MD025 -->
