@@ -2,7 +2,7 @@
 # File: Dockerfile
 # Author: Vatsal Gupta (gvatsal60)
 # Date: 21-Sep-2025
-# Description: Dockerfile for a Streamlit application using UV base image.
+# Description: Dockerfile for a Streamlit application.
 # ##########################################################################
 
 # ##########################################################################
@@ -15,8 +15,7 @@
 # ##########################################################################
 # Base Image
 # ##########################################################################
-# Stage 1: Builder - Install dependencies
-FROM python:3.12-slim AS builder
+FROM python:3.12-alpine
 
 # ##########################################################################
 # Maintainer
@@ -31,24 +30,10 @@ WORKDIR /app
 # ##########################################################################
 # Copy Files
 # ##########################################################################
-# Copy requirements and install them
-COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+COPY src/ ./src/
+COPY requirements.txt ./
 
-# Copy application code
-COPY src/ .
-
-# Stage 2: Runtime - Create the distroless image
-FROM gcr.io/distroless/python3-debian12:nonroot
-
-WORKDIR /app
-
-# Copy installed packages and application code from the builder stage
-COPY --from=builder /root/.local /usr/.local
-COPY --from=builder /app .
-
-# Add the user's local bin directory to the PATH
-ENV PATH=/usr/.local/bin:$PATH
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # ##########################################################################
 # Expose Port
@@ -58,4 +43,4 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
+ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
