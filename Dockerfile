@@ -43,6 +43,4 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
-
 ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
