@@ -39,7 +39,7 @@ RUN pip install --user --no-cache-dir -r requirements.txt
 COPY src/ .
 
 # Stage 2: Runtime - Create the distroless image
-FROM gcr.io/distroless/python3.12:nonroot
+FROM gcr.io/distroless/python3-debian12:nonroot
 
 WORKDIR /app
 
