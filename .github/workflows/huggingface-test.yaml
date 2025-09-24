@@ -27,4 +27,4 @@ jobs:
           HF_BRANCH: main
         run: |
           git remote set-url origin https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_SPACE
-          git push origin master:$HF_BRANCH --force
+          git push origin ${{ github.ref_name }}:$HF_BRANCH --force
