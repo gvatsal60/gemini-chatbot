@@ -25,6 +25,8 @@ license: apache-2.0
 
 Gemini Chatbot is an AI-powered conversational assistant designed to help users interact with various models through natural language. Built with Python, it leverages modern AI models to provide intelligent, context-aware responses.
 
+[![Chatbot Demo](https://img.shields.io/badge/Launch-Chatbot-blue)](https://gvatsal60-gemini-chatbot.hf.space)
+
 ## Features
 
 - Natural language understanding and conversation flow
