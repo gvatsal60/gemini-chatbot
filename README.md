@@ -1,3 +1,19 @@
+---
+title: Gemini Chatbot
+sdk: docker
+python_version: 3.12
+app_port: 8501
+tags:
+- streamlit
+- genai
+- python
+- google
+pinned: false
+short_description: A conversational chatbot powered by Google's Gemini models
+license: apache-2.0
+---
+
+<!-- markdownlint-disable MD025 -->
 # Gemini Chatbot
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/gvatsal60/gemini-chatbot)
