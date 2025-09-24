@@ -13,13 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
           lfs: true
       - name: Configure Git
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "${{ github.actor }}"
-          git fetch origin
       - name: Push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
