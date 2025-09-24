@@ -62,7 +62,7 @@
       }
     }
   },
-  "image": "mcr.microsoft.com/devcontainers/python:3.12:latest",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "postCreateCommand": "chmod +x ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh && ${containerWorkspaceFolder}/.devcontainer/postCreateScript.sh",
   "runArgs": [
     "--rm",

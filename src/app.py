@@ -74,6 +74,12 @@ with st.sidebar:
         help='Choose a Gemini model'
     )
 
+st.set_page_config(
+    page_title='Gemini Chatbot',
+    page_icon=':ghost:',  # Optional: set a favicon
+    layout='centered',  # Optional: set page layout
+    initial_sidebar_state='auto'  # Optional: set sidebar state
+)
 st.title('💬 Q&A Chatbot')
 
 initialize_session()
