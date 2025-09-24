@@ -19,7 +19,7 @@ jobs:
       - name: Configure Git
         run: |
           git config --global user.email "action@github.com"
-          git config --global user.name "${{ github.actor }}"
+          git config --global user.name "github-actions"
       - name: Push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
