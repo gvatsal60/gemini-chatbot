@@ -17,6 +17,7 @@ license: apache-2.0
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/gvatsal60/gemini-chatbot)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gvatsal60/gemini-chatbot/master.svg)](https://results.pre-commit.ci/latest/github/gvatsal60/gemini-chatbot/HEAD)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/65deeabfad78410990cbcd87bfc1d1fa)](https://app.codacy.com/gh/gvatsal60/gemini-chatbot/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/gvatsal60/gemini-chatbot/badge)](https://www.codefactor.io/repository/github/gvatsal60/gemini-chatbot)
 ![GitHub pull-requests](https://img.shields.io/github/issues-pr/gvatsal60/gemini-chatbot)
 ![GitHub Issues](https://img.shields.io/github/issues/gvatsal60/gemini-chatbot)
