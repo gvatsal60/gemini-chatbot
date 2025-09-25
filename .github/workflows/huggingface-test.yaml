@@ -6,7 +6,18 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Build Docker image
+        env:
+          IMAGE_NAME: ${{ github.repository_owner }}/github-test
+        run: |
+          docker build -t $IMAGE_NAME .
   sync-to-hub:
+    needs: build-docker-image
     runs-on: ubuntu-latest
     environment: HF_TOKEN
     steps:
