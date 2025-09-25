@@ -25,7 +25,6 @@
         "ms-python.pylint",
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "snyk-security.snyk-vulnerability-scanner",
         "streetsidesoftware.code-spell-checker",
         "usernamehw.errorlens"
       ],
