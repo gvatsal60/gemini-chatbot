@@ -66,7 +66,7 @@ uv add -r requirements.txt
 ### Running the Chatbot
 
 ```bash
-uv run --directory streamlit run app.py
+uv run --directory src streamlit run app.py
 ```
 
 ## Usage
