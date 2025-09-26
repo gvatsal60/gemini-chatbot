@@ -2,7 +2,7 @@
 # * File: Makefile
 # * Author: Vatsal Gupta
 # * Date: 21-Sep-2025
-# * Description: Brief description of the Makefile's purpose.
+# * Description: Makefile for managing the application.
 # **************************************************************************************/
 
 #***************************************************************************************
