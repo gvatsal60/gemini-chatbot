@@ -15,7 +15,7 @@
 # ##########################################################################
 # Base Image
 # ##########################################################################
-FROM python:3.12-alpine
+FROM python:3.13-alpine
 
 RUN addgroup -S nonroot \
   && adduser -S nonroot -G nonroot
