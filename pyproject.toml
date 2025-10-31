@@ -5,6 +5,6 @@ description = "A chatbot application using Google's Gemini API and Streamlit."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "google-generativeai>=0.8.5",
+    "google-genai>=1.47.0",
     "streamlit>=1.49.1",
 ]

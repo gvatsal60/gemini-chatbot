@@ -25,6 +25,8 @@ all: sync run
 
 sync:
 	@uv sync
+freeze: sync
+	@uv pip freeze > requirements.txt
 run: sync
 	@uv run --directory $(SRC_DIR) streamlit run app.py --browser.gatherUsageStats false
 test: sync

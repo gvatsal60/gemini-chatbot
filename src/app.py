@@ -2,12 +2,12 @@
 A robust chatbot application using Google Generative AI models with Streamlit.
 '''
 
-import google.generativeai as genai
-import google.api_core.exceptions as gexceptions
+from google import genai
+from google.genai.errors import APIError
 import streamlit as st
 
 
-def initialize_session():
+def initialize_session() -> None:
     """ Initialize session state variables. """
     if 'messages' not in st.session_state:
         st.session_state['messages'] = [{
@@ -29,27 +29,19 @@ def validate_inputs(_api_key: str, _model_name: str) -> bool:
     return True
 
 
-def get_model(_api_key: str, _model_name: str) -> genai.GenerativeModel | None:
-    """ Initialize and return the GenerativeModel. """
-    try:
-        genai.configure(api_key=_api_key)
-        return genai.GenerativeModel(model_name=_model_name)
-    except (gexceptions.GoogleAPICallError) as e:
-        st.error(
-            f"Failed to initialize the model. Please check your API key and model selection. \
-            Details: {e.message}"
-        )
-        return None
-
-
-def generate_response(_model: genai.GenerativeModel, _prompt: str) -> str | None:
+def generate_response(_api_key: str, _model_name: str, _prompt: str) -> str | None:
     """ Generate a response from the model based on the user prompt. """
     try:
-        resp = _model.generate_content(contents=_prompt)
+        client = genai.Client(api_key=_api_key)
+        resp = client.models.generate_content(
+            model=_model_name,
+            contents=_prompt
+        )
         return resp.text
-    except (gexceptions.GoogleAPICallError) as e:
+    except (APIError) as e:
         st.error(
-            f"Failed to get a response from the model. Details: {e.message}")
+            f"Failed to get a response from the model. Details: {e.message}"
+        )
         return None
 
 
@@ -95,15 +87,13 @@ if prompt and not INPUT_DISABLED:
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     st.chat_message('user').write(prompt)
 
-    model = get_model(api_key, model_name)
-    if model:
-        response = generate_response(model, prompt)
-        if response:
-            st.session_state.messages.append(
-                {'role': 'assistant', 'content': response})
-            st.chat_message('assistant').write(response)
-        else:
-            st.session_state.messages.append(
-                {'role': 'assistant', 'content': "Sorry, I couldn't process your request."})
-            st.chat_message('assistant').write(
-                "Sorry, I couldn't process your request.")
+    response = generate_response(api_key, model_name, prompt)
+    if response:
+        st.session_state.messages.append(
+            {'role': 'assistant', 'content': response})
+        st.chat_message('assistant').write(response)
+    else:
+        st.session_state.messages.append(
+            {'role': 'assistant', 'content': "Sorry, I couldn't process your request."})
+        st.chat_message('assistant').write(
+            "Sorry, I couldn't process your request.")
