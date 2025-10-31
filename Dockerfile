@@ -15,10 +15,7 @@
 # ##########################################################################
 # Base Image
 # ##########################################################################
-FROM python:3.14-alpine
-
-RUN addgroup -S nonroot \
-  && adduser -S nonroot -G nonroot
+FROM ghcr.io/astral-sh/uv
 
 # ##########################################################################
 # Maintainer
@@ -31,25 +28,12 @@ LABEL maintainer="Vatsal Gupta (gvatsal60)"
 WORKDIR /app
 
 # ##########################################################################
-# Install System Dependencies
-# ##########################################################################
-RUN apk update \
-  && apk add --no-cache \
-  build-base \
-  cmake \
-  g++ \
-  && rm -rf /var/cache/apk/*
-
-# ##########################################################################
 # Copy Files
 # ##########################################################################
 COPY src/ ./src/
-COPY requirements.txt ./
+COPY pyproject.toml ./
 
-RUN pip install --no-cache-dir --upgrade pip pip-tools \
-  && pip install --no-cache-dir -r requirements.txt
-
-USER nonroot
+RUN uv sync --no-cache
 
 # ##########################################################################
 # Expose Port
@@ -59,4 +43,8 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
-ENTRYPOINT ["streamlit", "run", "src/app.py", "--server.port=8501", "--server.address=0.0.0.0", "--browser.gatherUsageStats=false"]
+ENTRYPOINT ["uv", "run", "--directory", "src", \
+  "streamlit", "run", "app.py", \
+  "--server.port=8501", \
+  "--server.address=0.0.0.0", \
+  "--browser.gatherUsageStats=false"]
