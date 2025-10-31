@@ -31,14 +31,18 @@ LABEL maintainer="Vatsal Gupta (gvatsal60)"
 WORKDIR /app
 
 # ##########################################################################
+# Install System Dependencies
+# ##########################################################################
+RUN apk update \
+  && apk add --no-cache cmake make g++
+
+# ##########################################################################
 # Copy Files
 # ##########################################################################
 COPY src/ ./src/
 COPY requirements.txt ./
 
-RUN apk update \
-  && apk add --no-cache cmake \
-  && pip install --no-cache-dir --upgrade pip pip-tools \
+RUN pip install --no-cache-dir --upgrade pip pip-tools \
   && pip install --no-cache-dir -r requirements.txt
 
 USER nonroot
