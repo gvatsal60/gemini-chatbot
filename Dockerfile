@@ -36,7 +36,8 @@ WORKDIR /app
 COPY src/ ./src/
 COPY requirements.txt ./
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 USER nonroot
 
