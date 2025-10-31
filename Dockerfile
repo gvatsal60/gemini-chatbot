@@ -34,7 +34,11 @@ WORKDIR /app
 # Install System Dependencies
 # ##########################################################################
 RUN apk update \
-  && apk add --no-cache cmake make g++
+  && apk add --no-cache \
+  build-base \
+  cmake \
+  g++ \
+  && rm -rf /var/cache/apk/*
 
 # ##########################################################################
 # Copy Files
