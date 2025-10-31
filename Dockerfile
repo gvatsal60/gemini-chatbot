@@ -36,7 +36,9 @@ WORKDIR /app
 COPY src/ ./src/
 COPY requirements.txt ./
 
-RUN pip install --no-cache-dir --upgrade pip pip-tools \
+RUN apk update \
+  && apk add --no-cache cmake \
+  && pip install --no-cache-dir --upgrade pip pip-tools \
   && pip install --no-cache-dir -r requirements.txt
 
 USER nonroot
