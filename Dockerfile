@@ -36,7 +36,7 @@ WORKDIR /app
 COPY src/ ./src/
 COPY pyproject.toml ./
 
-RUN pip install --upgrade --no-cache pip pip-tools \
+RUN pip install --no-cache-dir --upgrade pip pip-tools \
   && uv sync --no-cache
 
 # ##########################################################################
