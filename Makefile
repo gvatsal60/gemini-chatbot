@@ -21,14 +21,17 @@ SRC_DIR := src
 # **************************************************************************************/
 .PHONY: all run test clean
 
-all: sync run
+all: clean sync run
 
 sync:
-	@uv sync
+	@uv sync --no-cache
+freeze: sync
+	@uv export --quiet --no-header --no-annotate --no-hashes --format requirements.txt --output-file requirements.txt
 run: sync
 	@uv run --directory $(SRC_DIR) streamlit run app.py --browser.gatherUsageStats false
 test: sync
 	@echo "No tests available currently."
 # 	@uv test
 clean:
+	@rm -rf __pycache__ .pytest_cache .mypy_cache .venv
 	@uv clean

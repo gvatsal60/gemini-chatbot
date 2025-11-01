@@ -1,10 +1,10 @@
 [project]
 name = "gemini-chatbot"
-version = "0.1.0"
+version = "0.2.0"
 description = "A chatbot application using Google's Gemini API and Streamlit."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "google-generativeai>=0.8.5",
+    "google-genai>=1.47.0",
     "streamlit>=1.49.1",
 ]
