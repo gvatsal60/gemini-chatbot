@@ -38,7 +38,8 @@ WORKDIR /app
 COPY src/ ./src/
 COPY pyproject.toml ./
 
-RUN uv sync --no-cache
+RUN pip install --upgrade --no-cache pip pip-tools \
+  && uv sync --no-cache
 
 # ##########################################################################
 # Expose Port
