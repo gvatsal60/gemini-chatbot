@@ -104,11 +104,6 @@ GENAI_CLIENT = None
 
 if not INPUT_DISABLED:
     GENAI_CLIENT = Config(api_key).get_client()
-else:
-    if GENAI_CLIENT is not None:
-        GENAI_CLIENT.close()
-    GENAI_CLIENT = None
-
 if prompt and GENAI_CLIENT is not None:
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     st.chat_message('user').write(prompt)
