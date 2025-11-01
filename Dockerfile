@@ -15,28 +15,36 @@
 # ##########################################################################
 # Base Image
 # ##########################################################################
-FROM ghcr.io/astral-sh/uv:python3.12-alpine
-
-RUN addgroup -S nonroot \
-  && adduser -S nonroot -G nonroot
+FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim
 
 # ##########################################################################
 # Maintainer
 # ##########################################################################
 LABEL maintainer="Vatsal Gupta (gvatsal60)"
 
+# Add non-root user
+RUN addgroup --system nonroot \
+  && adduser --system --ingroup nonroot nonroot
+
 # ##########################################################################
 # Set Working Directory
 # ##########################################################################
 WORKDIR /app
 
+# Set cache directory to /tmp to avoid permission issues
+ENV XDG_CACHE_HOME=/tmp/.cache
+
 # ##########################################################################
 # Copy Files
 # ##########################################################################
-COPY src/ ./src/
+# Copy dependency files first for better caching
 COPY pyproject.toml ./
 
+# Install dependencies into a local folder
 RUN uv sync --no-cache
+
+# Copy source code
+COPY src/ ./
 
 # ##########################################################################
 # Expose Port
@@ -46,9 +54,10 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
+# Switch to non-root user
 USER nonroot
 
-ENTRYPOINT ["uv", "run", "--directory", "src", \
+ENTRYPOINT [ "uv", "run", \
   "streamlit", "run", "app.py", \
   "--server.port=8501", \
   "--server.address=0.0.0.0", \
