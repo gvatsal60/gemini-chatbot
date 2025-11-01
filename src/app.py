@@ -9,13 +9,11 @@ import streamlit as st
 
 class Config:
     """ Configuration settings for the chatbot application. """
-
-    __client: genai.Client
-    __api_key: str
+    __client: genai.Client | None = None
+    __api_key: str | None = None
 
     def __init__(self, _api_key: str) -> None:
         self.__api_key = _api_key
-        self.__client = genai.Client(api_key=self.__api_key)
 
     def get_client(self) -> genai.Client:
         """ Create and return a GenAI client instance. """
