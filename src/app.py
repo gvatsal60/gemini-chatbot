@@ -7,6 +7,22 @@ from google.genai.errors import APIError
 import streamlit as st
 
 
+class Config:
+    """ Configuration settings for the chatbot application. """
+
+
+    def __init__(self, _api_key: str) -> None:
+        self.__api_key = _api_key
+        self.__client: genai.Client | None = None
+
+    def get_client(self) -> genai.Client:
+        """ Create and return a GenAI client instance. """
+        if self.__client is None:
+            self.__client = genai.Client(api_key=self.__api_key)
+
+        return self.__client
+
+
 def initialize_session() -> None:
     """ Initialize session state variables. """
     if 'messages' not in st.session_state:
@@ -29,11 +45,10 @@ def validate_inputs(_api_key: str, _model_name: str) -> bool:
     return True
 
 
-def generate_response(_api_key: str, _model_name: str, _prompt: str) -> str | None:
+def generate_response(_client: genai.Client, _model_name: str, _prompt: str) -> str | None:
     """ Generate a response from the model based on the user prompt. """
     try:
-        client = genai.Client(api_key=_api_key)
-        resp = client.models.generate_content(
+        resp = _client.models.generate_content(
             model=_model_name,
             contents=_prompt
         )
@@ -45,6 +60,14 @@ def generate_response(_api_key: str, _model_name: str, _prompt: str) -> str | No
         return None
 
 
+AVAILABLE_MODELS = [
+    'gemini-2.5-pro',
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-lite',
+]
+
 with st.sidebar:
     api_key = st.text_input(
         label='Google API Key',
@@ -55,13 +78,7 @@ with st.sidebar:
     )
     model_name = st.selectbox(
         label='Select Model',
-        options=[
-            'gemini-2.5-pro',
-            'gemini-2.5-flash',
-            'gemini-2.5-flash-lite',
-            'gemini-2.0-flash',
-            'gemini-2.0-flash-lite',
-        ],
+        options=AVAILABLE_MODELS,
         index=None,
         help='Choose a Gemini model'
     )
@@ -83,11 +100,15 @@ for msg in st.session_state.messages:
 INPUT_DISABLED = not validate_inputs(api_key, model_name)
 prompt = st.chat_input(disabled=INPUT_DISABLED)
 
-if prompt and not INPUT_DISABLED:
+GENAI_CLIENT = None
+
+if not INPUT_DISABLED:
+    GENAI_CLIENT = Config(api_key).get_client()
+if prompt and GENAI_CLIENT is not None:
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     st.chat_message('user').write(prompt)
 
-    response = generate_response(api_key, model_name, prompt)
+    response = generate_response(GENAI_CLIENT, model_name, prompt)
     if response:
         st.session_state.messages.append(
             {'role': 'assistant', 'content': response})
