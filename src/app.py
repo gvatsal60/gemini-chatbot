@@ -100,13 +100,20 @@ for msg in st.session_state.messages:
 INPUT_DISABLED = not validate_inputs(api_key, model_name)
 prompt = st.chat_input(disabled=INPUT_DISABLED)
 
-if prompt and not INPUT_DISABLED:
-    client = Config(api_key).get_client()
+GENAI_CLIENT = None
 
+if not INPUT_DISABLED:
+    GENAI_CLIENT = Config(api_key).get_client()
+else:
+    if GENAI_CLIENT is not None:
+        GENAI_CLIENT.close()
+    GENAI_CLIENT = None
+
+if prompt and GENAI_CLIENT is not None:
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     st.chat_message('user').write(prompt)
 
-    response = generate_response(client, model_name, prompt)
+    response = generate_response(GENAI_CLIENT, model_name, prompt)
     if response:
         st.session_state.messages.append(
             {'role': 'assistant', 'content': response})
