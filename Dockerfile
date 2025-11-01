@@ -20,8 +20,6 @@ FROM ghcr.io/astral-sh/uv:python3.12-alpine
 RUN addgroup -S nonroot \
   && adduser -S nonroot -G nonroot
 
-USER nonroot
-
 # ##########################################################################
 # Maintainer
 # ##########################################################################
@@ -49,6 +47,8 @@ EXPOSE 8501
 # ##########################################################################
 # Command to Run
 # ##########################################################################
+USER nonroot
+
 ENTRYPOINT ["uv", "run", "--directory", "src", \
   "streamlit", "run", "app.py", \
   "--server.port=8501", \
