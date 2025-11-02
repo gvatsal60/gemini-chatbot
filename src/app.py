@@ -10,7 +10,6 @@ import streamlit as st
 class Config:
     """ Configuration settings for the chatbot application. """
 
-
     def __init__(self, _api_key: str) -> None:
         self.__api_key = _api_key
         self.__client: genai.Client | None = None
