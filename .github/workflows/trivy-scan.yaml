@@ -1,0 +1,12 @@
+name: Trivy Scan
+on:
+  pull_request:
+  push:
+    branches: ["master", "main"]
+permissions:
+  contents: read
+jobs:
+  trivy-scan:
+    uses: gvatsal60/.github/.github/workflows/trivy-scan.yaml@c75bcee46ecb94ecf49361b9d8a0911708d30ca9
+    with:
+      dockerfile_exists: true
