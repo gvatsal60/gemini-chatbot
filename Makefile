@@ -2,23 +2,23 @@
 .DEFAULT_GOAL := help
 
 help: ## Show this help message
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 SRC_DIR := src
 
-.PHONY: all run test clean
+.PHONY: all sync freeze run test clean
 
-all: clean sync run
+all: clean sync run ## Run clean, sync, and run
 
-sync:
+sync: ## Sync dependencies with uv
 	@uv sync --no-cache
-freeze: sync
+freeze: sync ## Export requirements.txt
 	@uv export --quiet --no-header --no-annotate --no-hashes --format requirements.txt --output-file requirements.txt
-run: sync
+run: sync ## Run the Streamlit app
 	@uv run --directory $(SRC_DIR) streamlit run app.py --browser.gatherUsageStats false
-test: sync
+test: sync ## Run tests
 	@echo "No tests available currently."
 # 	@uv test
-clean:
+clean: ## Clean caches and venv
 	@rm -rf __pycache__ .pytest_cache .mypy_cache .venv
 	@uv clean
