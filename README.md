@@ -54,7 +54,7 @@ cd GeminiChatbot
 Install `Python` dependencies:
 
 ```bash
-uv sync
+uv sync --no-cache --quiet
 ```
 
 Install `Python` dependencies (Optional):

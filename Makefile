@@ -11,7 +11,7 @@ SRC_DIR := src
 all: clean sync run ## Run clean, sync, and run
 
 sync: ## Sync dependencies with uv
-	@uv sync --no-cache
+	@uv sync --no-cache --quiet
 freeze: sync ## Export requirements.txt
 	@uv export --quiet --no-header --no-annotate --no-hashes --format requirements.txt --output-file requirements.txt
 run: sync ## Run the Streamlit app
@@ -21,4 +21,4 @@ test: sync ## Run tests
 # 	@uv test
 clean: ## Clean caches and venv
 	@rm -rf __pycache__ .pytest_cache .mypy_cache .venv
-	@uv clean
+	@uv clean --quiet --force
